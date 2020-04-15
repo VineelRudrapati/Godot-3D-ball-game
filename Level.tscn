@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/Steve.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Steve.gd" type="Script" id=2]
+[ext_resource path="res://new_env.tres" type="Environment" id=3]
+[ext_resource path="res://textures/TactilePaving002_2K_Normal.jpg" type="Texture" id=4]
+[ext_resource path="res://Assets/blockslibrary.tres" type="MeshLibrary" id=5]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 15, 1, 15 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.0901961, 0.901961, 0.105882, 1 )
+
+[sub_resource type="CubeMesh" id=3]
+material = SubResource( 2 )
+size = Vector3( 30, 2, 30 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.14902, 1, 0, 1 )
+normal_enabled = true
+normal_scale = -5.0
+normal_texture = ExtResource( 4 )
+uv1_scale = Vector3( 0.2, 0.2, 0.2 )
+uv1_triplanar = true
+uv2_scale = Vector3( 0.2, 0.2, 0.2 )
+uv2_triplanar = true
+
+[node name="Level" type="Spatial"]
+
+[node name="Floor" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.95278, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.86787, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Floor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="Steve" parent="." instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="cameratarget" type="Spatial" parent="Steve"]
+transform = Transform( 1, 0, 0, 0, 0.997903, -0.0647239, 0, 0.0647239, 0.997903, 2.10434, 1.89721, 10.7578 )
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="."]
+transform = Transform( 0.246173, 0.902407, -0.353639, 0.34265, 0.260276, 0.902689, 0.906637, -0.343392, -0.245137, 6.47902, 11.0053, 16.0072 )
+environment = ExtResource( 3 )
+fov = 90.0
+target = NodePath("../Steve/cameratarget")
+speed = 3.0
+enabled = true
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.925039, -0.318877, 0.206449, -0.0480892, 0.440795, 0.896319, -0.376817, -0.839057, 0.392418, -12.8207, 7.58324, 7.81507 )
+shadow_enabled = true
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 40.0
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource( 5 )
+cell_size = Vector3( 1, 1, 1 )
+data = {
+"cells": PoolIntArray( 65519, 0, 536870912, 65519, 1, 536870912, 65519, 2, 0, 65519, 3, 536870912, 65519, 4, 536870912, 65519, 5, 0, 65519, 6, 536870912, 65519, 7, 0, 65519, 8, 0, 65519, 9, 536870912, 65519, 10, 536870912, 65519, 11, 0, 65519, 12, 536870912, 65519, 13, 536870912, 65519, 14, 0, 65519, 65524, 536870912, 65519, 65525, -1610612736, 65519, 65526, 536870912, 65519, 65527, 536870912, 65519, 65528, 0, 65519, 65529, 0, 65519, 65530, 0, 65519, 65531, 536870912, 65519, 65532, 0, 65519, 65533, 0, 65519, 65534, 0, 65519, 65535, 0 )
+}
+__meta__ = {
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 0, 0 )
+}
